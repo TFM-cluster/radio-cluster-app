@@ -14,11 +14,17 @@ logo = Image.open("Airlytics.png")
 st.image(logo, use_column_width=True)
 
 # タイトル（すでにあるものも上書きOK）
-st.markdown(
-    "<h1 style='text-align: center; color: #333;'>Airlytics</h1>"
-    "<h3 style='text-align: center; color: #666;'>📻 ラジオAI：時間帯クラスタ診断</h3>",
-    unsafe_allow_html=True
-)
+st.markdown("""
+    <style>
+    body {
+        background-color: #f9f9f9;
+    }
+    .stButton>button {
+        background-color: #4CAF50;
+        color: white;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
 # データ読み込み（CSV）
 @st.cache_data
