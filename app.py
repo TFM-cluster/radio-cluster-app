@@ -1,32 +1,47 @@
 import streamlit as st
+from PIL import Image
 import pandas as pd
 
-# データ読み込み
-df = pd.read_csv("cluster_by_time.csv")
+# ページ設定
+st.set_page_config(page_title="Airlytics", page_icon="📻", layout="centered")
+
+# ロゴ画像
+logo = Image.open("Airlytics.png")
+st.image(logo, use_column_width=True)
 
 # タイトル
-st.title("📻 ラジオAI：時間帯クラスタ診断")
+st.markdown(
+    """
+    <h1 style='text-align: center; color: #333;'>Airlytics</h1>
+    <h3 style='text-align: center; color: #666;'>📊 ラジオAI：時間帯クラスタ診断</h3>
+    """,
+    unsafe_allow_html=True
+)
 
-# 曜日と時間の入力
-weekdays = sorted(df["曜日"].unique())
-weekday = st.selectbox("📅 曜日を選んでください", weekdays)
-hour = st.slider("🕒 時間を選んでください（24h形式, 5〜29）", min_value=5, max_value=29, value=9)
+# データ読み込み（CSV）
+@st.cache_data
+def load_data():
+    return pd.read_csv("cluster_by_time.csv")
 
-# 該当時間のクラスタを表示
-row = df[(df["曜日"] == weekday) & (df["開始時"] == hour)]
+df = load_data()
 
-if not row.empty:
-    cluster = int(row["代表クラスタ"].values[0])
-    st.success(f"✅ {weekday}曜 {hour}時台 は『クラスタ {cluster}』です")
+# 入力UI
+st.markdown("### 🔍 曜日と時間帯を選択してください")
+weekday = st.selectbox("曜日を選んでください", df["曜日"].unique())
+hour = st.slider("時間を選んでください（24h形式、5〜29）", min_value=5, max_value=29, value=9)
 
-    # 同じクラスタの他の時間帯を抽出（今の時間以外）
-    others = df[(df["代表クラスタ"] == cluster) & ~((df["曜日"] == weekday) & (df["開始時"] == hour))]
+# 診断
+match = df[(df["曜日"] == weekday) & (df["開始時"] == hour)]
+if not match.empty:
+    cluster = match.iloc[0]["推定クラスタ"]
+    st.success(f"✅ {weekday}曜 {hour}時台 は『クラスター {cluster}』です")
 
+    # 同じクラスタの他時間帯
+    others = df[(df["推定クラスタ"] == cluster) & ~((df["曜日"] == weekday) & (df["開始時"] == hour))]
     if not others.empty:
-        st.markdown("📍 同じクラスタの他の時間帯：")
-        for _, r in others.iterrows():
-            st.write(f"・{r['曜日']}曜 {r['開始時']}時台")
-    else:
-        st.info("このクラスタの他の時間帯は見つかりませんでした。")
+        st.markdown("📍 同じクラスターの他の時間帯：")
+        for _, row in others.iterrows():
+            st.markdown(f"- {row['曜日']} {row['開始時']}時台")
 else:
-    st.error("この時間帯のデータが存在しません。")
+    st.warning("該当するクラスタが見つかりませんでした。")
+    
