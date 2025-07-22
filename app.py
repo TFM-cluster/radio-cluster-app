@@ -3,18 +3,20 @@ from PIL import Image
 import pandas as pd
 
 # ページ設定
-st.set_page_config(page_title="Airlytics", page_icon="📻", layout="centered")
+st.set_page_config(
+    page_title="Airlytics",
+    page_icon="📻",
+    layout="centered"
+)
 
-# ロゴ画像
+# ロゴ画像の読み込みと表示
 logo = Image.open("Airlytics.png")
 st.image(logo, use_column_width=True)
 
-# タイトル
+# タイトル（すでにあるものも上書きOK）
 st.markdown(
-    """
-    <h1 style='text-align: center; color: #333;'>Airlytics</h1>
-    <h3 style='text-align: center; color: #666;'>📊 ラジオAI：時間帯クラスタ診断</h3>
-    """,
+    "<h1 style='text-align: center; color: #333;'>Airlytics</h1>"
+    "<h3 style='text-align: center; color: #666;'>📻 ラジオAI：時間帯クラスタ診断</h3>",
     unsafe_allow_html=True
 )
 
