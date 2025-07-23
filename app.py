@@ -11,7 +11,7 @@ st.set_page_config(
 
 # ロゴ画像の読み込みと表示
 logo = Image.open("Airlytics.png")
-st.image(logo, use_column_width=True)
+st.image(logo, use_container_width=True)
 
 # タイトル（すでにあるものも上書きOK）
 st.markdown("""
