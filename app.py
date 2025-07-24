@@ -4,14 +4,14 @@ import pandas as pd
 
 # ✅ ページ設定（最初に一度だけ）
 st.set_page_config(
-    page_title="Airlytics",
+    page_title="AIrlytics",
     page_icon="📻",
     layout="centered",
     initial_sidebar_state="auto"
 )
 
 # ✅ ロゴ画像の読み込みと表示
-logo = Image.open("Airlytics.png")
+logo = Image.open("AIrlytics.png")
 st.image(logo, use_container_width=True)
 
 # ✅ CSSデザイン
