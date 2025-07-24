@@ -15,9 +15,11 @@ logo = Image.open("Airlytics.png")
 st.image(logo, use_container_width=True)
 
 # ✅ CSSデザイン
+# スタイル（背景色＋フォントサイズ調整）
 st.markdown("""
     <style>
-    body {
+    html, body, [class*="css"]  {
+        font-size: 14px;
         background-color: #f9f9f9;
     }
     .stButton>button {
