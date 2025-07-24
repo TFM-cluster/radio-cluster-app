@@ -2,6 +2,21 @@ import streamlit as st
 from PIL import Image
 import pandas as pd
 
+# データ読み込み
+df = load_data()
+
+# --- 🔍 列名チェック（エラー防止）---
+expected_columns = ["曜日", "開始時", "推定クラスタ"]
+missing_cols = [col for col in expected_columns if col not in df.columns]
+
+if missing_cols:
+    st.error(f"❌ エラー：CSVに以下の列がありません → {missing_cols}")
+    st.stop()
+
+# 🔎 ログ確認用（必要に応じて）
+# st.write("現在の列名:", df.columns.tolist())
+
+
 # ページ設定
 st.set_page_config(
     page_title="Airlytics",
