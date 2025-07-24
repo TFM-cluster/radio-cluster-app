@@ -41,7 +41,7 @@ hour = st.slider("時間を選んでください（24h形式、5〜29）", min_v
 # 診断
 match = df[(df["曜日"] == weekday) & (df["開始時"] == hour)]
 if not match.empty:
-    cluster = match.iloc[0]["代表クラスタ"]
+    cluster = match.iloc[0]["推定クラスタ"]
     st.success(f"✅ {weekday}曜 {hour}時台 は『クラスター {cluster}』です")
 
     # 同じクラスタの他時間帯
