@@ -10,16 +10,18 @@ st.set_page_config(
     initial_sidebar_state="auto"
 )
 
-# ✅ ロゴ画像の読み込みと表示
+# ✅ ロゴ画像の読み込みと表示（TFMロゴ → AIrlyticsロゴ）
+tfm_logo = Image.open("TFM_logo.png")  # ← TFMロゴのファイル名に合わせて修正
+st.image(tfm_logo, width=100)  # 小さいTFMロゴ（100px）
+
 logo = Image.open("AIrlytics.png")
 st.image(logo, use_container_width=True)
 
-# ✅ CSSデザイン
-# スタイル（背景色＋フォントサイズ調整）
+# ✅ CSSデザイン（全体フォントサイズ調整など）
 st.markdown("""
     <style>
     html, body, [class*="css"]  {
-        font-size: 12px;
+        font-size: 16px !important;  /* ← スマホ向けに拡大 */
         background-color: #f9f9f9;
     }
     .stButton>button {
