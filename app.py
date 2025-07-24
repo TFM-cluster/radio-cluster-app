@@ -10,10 +10,6 @@ st.set_page_config(
     initial_sidebar_state="auto"
 )
 
-# TFMロゴを読み込み、小さく表示（幅を調整）
-tfm_logo = Image.open("TFM_logo.png")  # ←ファイル名を実際のTFMロゴのファイル名に合わせてください
-st.image(tfm_logo, width=120)  # ここでロゴサイズ指定（120pxなど）
-
 # ✅ ロゴ画像の読み込みと表示
 logo = Image.open("AIrlytics.png")
 st.image(logo, use_container_width=True)
