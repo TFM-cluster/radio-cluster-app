@@ -2,6 +2,14 @@ import streamlit as st
 from PIL import Image
 import pandas as pd
 
+# ページ設定
+st.set_page_config(...)
+
+# 🔽 関数定義を先にする
+@st.cache_data
+def load_data():
+    return pd.read_csv("cluster_by_time.csv")
+
 # データ読み込み
 df = load_data()
 
