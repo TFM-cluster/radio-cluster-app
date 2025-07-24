@@ -2,6 +2,8 @@ import streamlit as st
 from PIL import Image
 import pandas as pd
 
+st.write("列一覧:", df.columns.tolist())
+
 # ページ設定
 st.set_page_config(
     page_title="Airlytics",
