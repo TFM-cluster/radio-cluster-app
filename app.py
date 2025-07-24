@@ -21,7 +21,7 @@ st.image(logo, use_container_width=True)
 st.markdown("""
     <style>
     html, body, [class*="css"]  {
-        font-size: 13px !important;  /* ← スマホ向けに拡大 */
+        font-size: 12px !important;  /* ← スマホ向けに拡大 */
         background-color: #f9f9f9;
     }
     .stButton>button {
