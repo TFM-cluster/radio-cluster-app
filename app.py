@@ -11,7 +11,7 @@ st.set_page_config(
 )
 
 # ✅ ロゴ画像の読み込みと表示（TFMロゴ → AIrlyticsロゴ）
-tfm_logo = Image.open("TFM_logo.png")  # ← TFMロゴのファイル名に合わせて修正
+tfm_logo = Image.open("tokyofm_4c_small.jpg")  # ← TFMロゴのファイル名に合わせて修正
 st.image(tfm_logo, width=100)  # 小さいTFMロゴ（100px）
 
 logo = Image.open("AIrlytics.png")
