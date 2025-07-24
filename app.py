@@ -19,7 +19,7 @@ st.image(logo, use_container_width=True)
 st.markdown("""
     <style>
     html, body, [class*="css"]  {
-        font-size: 13px;
+        font-size: 12px;
         background-color: #f9f9f9;
     }
     .stButton>button {
