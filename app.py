@@ -99,7 +99,16 @@ if not match.empty:
     info = cluster_info.get(cluster)
     if info:
         st.markdown(f"### 💡 クラスター{cluster}とは？")
-        st.image(info["img"], caption=info["text"], use_column_width=True)
+
+        # 注釈テキスト表示（改行を反映）
+        st.markdown(f"<div style='white-space: pre-wrap;'>{info['text']}</div>", unsafe_allow_html=True)
+
+        # 画像表示（存在チェック）
+        try:
+            cluster_img = Image.open(info["img"])
+            st.image(cluster_img, caption=f"クラスタ{cluster}のイメージ", use_container_width=True)
+        except FileNotFoundError:
+            st.warning(f"⚠️ 画像ファイル『{info['img']}』が見つかりません。")
 
     # ✅ 同じクラスタの他時間帯表示
     others = df[(df["推定クラスタ"] == cluster) & ~((df["曜日"] == weekday) & (df["開始時"] == hour))]
@@ -109,3 +118,4 @@ if not match.empty:
             st.markdown(f"- {row['曜日']} {row['開始時']}時台")
 else:
     st.warning("⚠️ 該当するクラスタが見つかりませんでした。")
+
