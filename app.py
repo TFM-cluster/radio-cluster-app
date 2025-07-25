@@ -11,7 +11,7 @@ st.set_page_config(
 )
 
 # ✅ ロゴ画像の表示（TFMロゴ → メインロゴ）
-tfm_logo = Image.open("tokyofm_4c_small.jpg")  # ← 小さいTFMロゴ画像
+tfm_logo = Image.open("tokyofm_4c_small.jpg")
 st.image(tfm_logo, width=100)
 
 logo = Image.open("AIrlytics.png")
@@ -21,7 +21,7 @@ st.image(logo, use_container_width=True)
 st.markdown("""
     <style>
     html, body, [class*="css"]  {
-        font-size: 12px !important;  /* スマホ向けフォントサイズ調整 */
+        font-size: 12px !important;
         background-color: #f9f9f9;
     }
     .stButton>button {
@@ -51,21 +51,7 @@ st.markdown("### 🔍 曜日と時間帯を選択してください")
 weekday = st.selectbox("曜日を選んでください", df["曜日"].unique())
 hour = st.slider("時間を選んでください（24h形式、5〜29）", min_value=5, max_value=29, value=9)
 
-# ✅ 該当クラスタ検索
-match = df[(df["曜日"] == weekday) & (df["開始時"] == hour)]
-
-if not match.empty:
-    cluster = int(match.iloc[0]["推定クラスタ"])
-    st.success(f"✅ {weekday}曜 {hour}時台 は『クラスター {cluster}』です")
-
-    # ✅ 同じクラスタの他時間帯表示
-    others = df[(df["推定クラスタ"] == cluster) & ~((df["曜日"] == weekday) & (df["開始時"] == hour))]
-    if not others.empty:
-        st.markdown("📍 同じクラスターの他の時間帯：")
-        for _, row in others.iterrows():
-            st.markdown(f"- {row['曜日']} {row['開始時']}時台")
-
-    # ✅ クラスター情報の定義
+# ✅ クラスター情報の定義
 cluster_info = {
     1: {
         "text": "クラスタ1：都内在住の働く中高年男女。通勤や夜のリラックスタイムにラジオを聴く。情報番組、ニュース、トーク番組を好む傾向。\n"
@@ -76,7 +62,7 @@ cluster_info = {
                 "聴取時間傾向：平日：8時~9時台、22時台／土日：7時~9時台、夜の23時にピーク",
         "img": "cluster_1.png"
     },
-        2: {
+    2: {
         "text": "クラスタ2：ビジネスマン中心。通勤時間帯に情報収集。",
         "img": "cluster_2.png"
     },
@@ -102,11 +88,24 @@ cluster_info = {
     }
 }
 
+# ✅ 該当クラスタ検索
+match = df[(df["曜日"] == weekday) & (df["開始時"] == hour)]
+
+if not match.empty:
+    cluster = int(match.iloc[0]["推定クラスタ"])
+    st.success(f"✅ {weekday}曜 {hour}時台 は『クラスター {cluster}』です")
+
     # ✅ クラスター詳細を表示
     info = cluster_info.get(cluster)
     if info:
         st.markdown(f"### 💡 クラスター{cluster}とは？")
         st.image(info["img"], caption=info["text"], use_column_width=True)
 
+    # ✅ 同じクラスタの他時間帯表示
+    others = df[(df["推定クラスタ"] == cluster) & ~((df["曜日"] == weekday) & (df["開始時"] == hour))]
+    if not others.empty:
+        st.markdown("📍 同じクラスターの他の時間帯：")
+        for _, row in others.iterrows():
+            st.markdown(f"- {row['曜日']} {row['開始時']}時台")
 else:
     st.warning("⚠️ 該当するクラスタが見つかりませんでした。")
